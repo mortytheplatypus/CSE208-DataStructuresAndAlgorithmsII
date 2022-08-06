@@ -43,9 +43,11 @@ int main() {
     return 0;
 }
 
+// Done
 int Hash1(string word) {
     int multipliers[] = {17, 13, 11, 7, 5, 3, 2}; 
     int temp = 0;
+
     for (int i=0; i<7; i++) {
         int powerofTen = 1;
         for (int j=0; j<i; j++) {
@@ -57,6 +59,7 @@ int Hash1(string word) {
     return temp%CAPACITY;
 }
 
+// Done
 int Hash2(string word) {
     int multipliers[] = {31, 71, 67, 53, 97, 23, 83};
     int temp = 0;
@@ -69,16 +72,18 @@ int Hash2(string word) {
             }
             n += (word[j]);
         }
+
         n *= word[i];
         n *= multipliers[i];
         n -= (i%2)*n; 
-        //changing it into n -= (i%2)*n*n; changes Hash1() collisions(!!!)
+        
         temp += n;
     }
 
     return temp%CAPACITY;
 }
 
+// Done
 int auxHash(string word) {
     int multipliers[] = {2, 3, 5, 7, 11, 15, 17};
 
@@ -90,7 +95,7 @@ int auxHash(string word) {
     return temp%CAPACITY;
 }
 
-//Insertion
+// Done
 void SeparateChainingInsert(string words[], vector< vector<string> >&separateChain1, vector< vector<string> >&separateChain2) {
     int collisions1=0, collisions2=0; 
 
@@ -111,6 +116,7 @@ void SeparateChainingInsert(string words[], vector< vector<string> >&separateCha
     cout << "\tCollisions by Hash2(): " << collisions2 << "\n\n";
 }
 
+// Done
 void DoubleHashingInsert(string words[], vector<string>&doubleHashTable1, vector<string>&doubleHashTable2) {
     //doubleHash(k, i) = (Hash(k) + i * auxHash(k)) % N
     int hash, collisions1=0, collisions2=0;
@@ -161,6 +167,7 @@ void DoubleHashingInsert(string words[], vector<string>&doubleHashTable1, vector
     cout << "\tCollisions by Hash2(): " << collisions2 << "\n\n";
 }
 
+// Done
 void CustomProbingInsert(string words[], vector<string>&cpTable1, vector<string>&cpTable2) {
     //customHash(k, i) = (Hash(k) + C1 * i * auxHash(k) + C2*i*i) % N
     int c1=271, c2=313;
@@ -212,7 +219,7 @@ void CustomProbingInsert(string words[], vector<string>&cpTable1, vector<string>
 
 }
 
-//Searching
+// Done
 void SeparateChainingSearch(string words[], vector< vector<string> >&separateChain1, vector< vector<string> >&separateChain2) {
     int probes1[LEN] = {0}, probes2[LEN] = {0};
     int hash, len;
@@ -256,6 +263,7 @@ void SeparateChainingSearch(string words[], vector< vector<string> >&separateCha
     cout << "\tHash2() average probes: " << averageProbe2 << "\n\n";
 }
 
+// Done
 void DoubleHashingSearch(string words[], vector<string>&doubleHashTable1, vector<string>&doubleHashTable2) {
     int probes1[LEN] = {0}, probes2[LEN] = {0};
     int hash;
@@ -305,6 +313,7 @@ void DoubleHashingSearch(string words[], vector<string>&doubleHashTable1, vector
     cout << "\tHash2() average probes: " << averageProbe2 << "\n\n";
 }
 
+// Done
 void CustomProbingSearch(string words[], vector<string>&cpTable1, vector<string>&cpTable2) {
     int probes1[LEN] = {0}, probes2[LEN] = {0};
     int c1=271, c2=313, hash;
@@ -356,8 +365,7 @@ void CustomProbingSearch(string words[], vector<string>&cpTable1, vector<string>
     cout << "\tHash2() average probes: " << averageProbe2 << "\n\n";
 }
 
-//Deletion
-
+// Done
 void SeparateChainingDelete(string word, vector< vector<string> >&separateChain1, vector< vector<string> >&separateChain2) {
     int hash, len; 
     
@@ -390,6 +398,7 @@ void SeparateChainingDelete(string word, vector< vector<string> >&separateChain1
     }
 }
 
+// Done
 void DoubleHashingDelete(string word, vector<string>&doubleHashTable1, vector<string>&doubleHashTable2) {
     int hash, len;
 
@@ -426,6 +435,7 @@ void DoubleHashingDelete(string word, vector<string>&doubleHashTable1, vector<st
     }
 }
 
+// Done
 void CustomProbingDelete(string word, vector<string>&cpTable1, vector<string>&cpTable2) {
     int hash, len; 
     
@@ -462,7 +472,7 @@ void CustomProbingDelete(string word, vector<string>&cpTable1, vector<string>&cp
     }
 } 
 
-//Word Generator
+// Done
 void WordGenerator(string words[], int len) {
     string dictionary[10] = {"lol", "irl", "bro", "wth", "smh", "imo", "ikr", "brb","omg", "mfw"};
     
@@ -484,3 +494,5 @@ void WordGenerator(string words[], int len) {
         }
     }
 }
+
+//

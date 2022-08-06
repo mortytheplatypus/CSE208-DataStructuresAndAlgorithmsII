@@ -17,9 +17,11 @@ public:
 };
 
 int main() {
-	freopen("inn.txt", "r", stdin);
+	freopen("FloydWarshall.txt", "r", stdin);
+
 	int vertices, edges, u, v, w; 
     cin >> vertices >> edges;
+    
     Graph graph(vertices);
 
     for (int i=0; i<edges; i++) {
@@ -35,6 +37,7 @@ int main() {
     return 0;
 }
 
+// Done
 Graph::Graph(int vertices) {
     this->vertices = vertices;
     adjacencyMatrix.resize(vertices);
@@ -49,6 +52,7 @@ Graph::Graph(int vertices) {
     }
 }
 
+// Done
 void Graph::FloydWarshall() {
 	for (int k=0; k<vertices; k++) {
         for (int i=0; i<vertices; i++) {
@@ -67,3 +71,5 @@ void Graph::FloydWarshall() {
         cout << "\n";
     }
 }
+
+//

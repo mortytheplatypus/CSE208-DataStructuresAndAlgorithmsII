@@ -8,10 +8,10 @@ struct Edge {
 	int destination;
 	int weight;
 
-	Edge(int u, int v, int w) {
-		source = u;
-		destination = v;
-		weight = w;
+	Edge(int source, int destination, int weight) {
+		this->source = source;
+		this->destination = destination;
+		this->weight = weight;
 	}
 };
 
@@ -32,11 +32,13 @@ public:
 };
 
 int main() {
-	freopen("in-BellmanFord-II.txt", "r", stdin);
-	int vertices, edges, u, v, source, destination; 
-	int w;
+	freopen("BellmanFord.txt", "r", stdin);
+
+	int vertices, edges, u, v, w, source, destination; 
 	cin >> vertices >> edges;
+
 	Graph graph(vertices, edges);
+
 	for (int i=0; i<edges; i++) {
 		cin >> u >> v >> w;
 		graph.addEdge(u, v, w);
@@ -44,10 +46,11 @@ int main() {
 
 	cin >> source >> destination;
 	graph.BellmanFord(source, destination);
+	
     return 0;
 }
 
-
+// Done
 void Graph::BellmanFord(int source, int destination) {
 	vector<int>costs(vertices, INF);
 	vector<int>parents(vertices, -1);
@@ -84,11 +87,11 @@ void Graph::BellmanFord(int source, int destination) {
 	if (negativeCycle) {
 		cout << "The graph contains a negative cycle\n";
 	} else {
-		cout << "Shortest path cost: " << costs[destination] << endl;
+		cout << "Shortest path cost: " << costs[destination] << "\n";
 		vector<int> shortestPath;
 		int v = destination;
 
-		while (v!=source) {
+		while (v != source) {
 			shortestPath.push_back(v);
 			v = parents[v];
 		}
@@ -97,6 +100,8 @@ void Graph::BellmanFord(int source, int destination) {
 		for (int i=shortestPath.size()-1; i>0; i--) {
 			cout << shortestPath[i] << " -> ";
 		}
-		cout << shortestPath[0] << endl;
+		cout << shortestPath[0] << "\n";
 	}
 }
+
+//

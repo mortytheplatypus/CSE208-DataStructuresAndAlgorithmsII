@@ -14,13 +14,17 @@ public:
     }
 
     bool bfs(int, int, vector<int>&);
-    int FordFulkerson(int, int);
+    int EdmondsKarp(int, int);
 };
 
 int main() {
-    freopen("in-FordFulkerson.txt", "r", stdin);
-    int vertices, c; cin >> vertices;
+    freopen("EdmondsKarp.txt", "r", stdin);
+
+    int vertices, c; 
+    cin >> vertices;
+
     Graph graph(vertices);
+
     for (int i=0; i<vertices; i++) {
         for (int j=0; j<vertices; j++) {
             cin >> c;
@@ -28,10 +32,12 @@ int main() {
         }
     }
 
-    cout << graph.FordFulkerson(0, 5) << endl;
+    cout << graph.EdmondsKarp(0, 5) << "\n";
+
     return 0;
 }
 
+// Done
 Graph::Graph(int vertices) {
     this->vertices = vertices;
         
@@ -44,6 +50,7 @@ Graph::Graph(int vertices) {
     }
 }
 
+// Done
 bool Graph::bfs(int s, int t, vector<int>&parent) {
     vector<bool>visited(vertices, false);
     queue<int> q;
@@ -70,24 +77,26 @@ bool Graph::bfs(int s, int t, vector<int>&parent) {
     return false;
 }
 
-int Graph::FordFulkerson(int s, int t) {
+// Done
+int Graph::EdmondsKarp(int source, int destination) {
     vector<int>parent(vertices); 
-    int max_flow = 0; 
+    int maxFlow = 0; 
     
-    while (bfs(s, t, parent)) {
-        int path_flow = INF;
-        for (int i=t; i!=s; i=parent[i]) {
-            path_flow = min(path_flow, residualGraph[parent[i]][i]);
+    while (bfs(source, destination, parent)) {
+        int pathFlow = INF;
+        for (int i=destination; i != source; i=parent[i]) {
+            pathFlow = min(pathFlow, residualGraph[parent[i]][i]);
         }
 
-        for (int i=t; i!=s; i=parent[i]) {
-            residualGraph[parent[i]][i] -= path_flow;
-            residualGraph[i][parent[i]] += path_flow;
+        for (int i=destination; i != source; i=parent[i]) {
+            residualGraph[parent[i]][i] -= pathFlow;
+            residualGraph[i][parent[i]] += pathFlow;
         }
 
-        max_flow += path_flow;
+        maxFlow += pathFlow;
     }
 
-    return max_flow;
+    return maxFlow;
 }
 
+//

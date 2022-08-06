@@ -7,9 +7,15 @@ public:
     int height;
     Node* left;
     Node* right;
+
+    Node(int data) {
+        this->data = data;
+        this->height = 1;
+        this->left = NULL;
+        this->right = NULL;
+    }
 };
 
-Node* CreateNode(int);
 int getHeight(Node*);
 int getBalanceFactor(Node*);
 
@@ -26,7 +32,7 @@ Node* RL_Rotate(Node*);
 
 
 int main() {
-    freopen("AVLtree.txt", "r", stdin);
+    freopen("AVLTree.txt", "r", stdin);
 
     char COMMAND;
     int INPUT;
@@ -42,7 +48,6 @@ int main() {
             PrintTree(root);    
             cout << "\n";
         } else if (COMMAND == 'D') {
-            // cout << "\n******Sending to Delete(): " << INPUT << "\n";
             root = Delete(root, INPUT);
             PrintTree(root);    
             cout << "\n";
@@ -54,15 +59,16 @@ int main() {
     return 0;
 }
 
-//Done
+// Done
 int getHeight(Node* node) {
     if (node == NULL) {
         return 0;
     }
+    
     return node->height;
 }
 
-//Done
+// Done
 int getBalanceFactor(Node* node) {
     if (node == NULL) {
         return 0;
@@ -71,18 +77,7 @@ int getBalanceFactor(Node* node) {
     return getHeight(node->left) - getHeight(node->right);
 }
 
-//Done
-Node* CreateNode(int data) {
-    Node* node = new Node();
-    node->data = data;
-    node->left = NULL;
-    node->right = NULL;
-    node->height = 1;
-
-    return node;
-}
-
-//Done
+// Done
 void Find(Node* root, int data) {
     if (root == NULL) {
         cout << "False\n";
@@ -98,10 +93,10 @@ void Find(Node* root, int data) {
     }
 } 
 
-//Done
+// Done
 Node* Insert(Node* &root, int data) {
     if (root == NULL) {
-        return CreateNode(data);
+        return new Node(data);
     } else if (data < root->data) {
         root->left = Insert(root->left, data);
     } else if (data > root->data) {
@@ -117,7 +112,7 @@ Node* Insert(Node* &root, int data) {
     return root;
 }
 
-//Done
+// Done
 Node* Delete(Node* root, int data) {
     if (root == NULL) {
         return root;
@@ -153,7 +148,7 @@ Node* Delete(Node* root, int data) {
     return root;
 }
 
-//Done
+// Done
 Node* Balance(Node* root) {
     int balanceFactor = getBalanceFactor(root);
     if (balanceFactor < -1 || balanceFactor > 1) {
@@ -180,7 +175,7 @@ Node* Balance(Node* root) {
     return root;
 }
 
-//Done
+// Done
 void PrintTree(Node* root) {
     if (root == NULL) {
         return;
@@ -197,7 +192,7 @@ void PrintTree(Node* root) {
     cout << ")";
 }
 
-//Done
+// Done
 Node* LL_Rotate(Node* node) {
     Node* t;
     Node* t1;
@@ -216,7 +211,7 @@ Node* LL_Rotate(Node* node) {
     return t1;
 }
 
-//Done
+// Done
 Node* RR_Rotate(Node* node) {
     Node* t;
     Node* t1;
@@ -235,7 +230,7 @@ Node* RR_Rotate(Node* node) {
     return t1;
 }
 
-//Done
+// Done
 Node* LR_Rotate(Node* node) {
     Node* t;
     Node* t1;
@@ -256,7 +251,7 @@ Node* LR_Rotate(Node* node) {
     return t;
 }
 
-//Done
+// Done
 Node* RL_Rotate(Node* node) {
     Node* t;
     Node* t1;

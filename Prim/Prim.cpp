@@ -6,6 +6,11 @@ using namespace std;
 struct Node {
 	int vertex;
 	double weight;
+
+	Node(int vertex, int weight) {
+		this->vertex = vertex;
+		this->weight = weight;
+	}
 };
 
 struct Comparator {
@@ -21,6 +26,12 @@ struct Edge {
 	bool operator<(Edge const& edge) {
 		return this->weight < edge.weight;
 	}
+
+	Edge(int source, int destination, double weight) {
+		this->source = source;
+		this->destination = destination;
+		this->weight = weight;
+	}
 };
 
 class Graph {
@@ -32,12 +43,11 @@ class Graph {
 public:
 	Graph(int, int);
     void addEdge(int, int, double);
-    void PrimMST();
-	void KruskalMST();
+    void Prim();
 };
 
 int main() {
-	freopen("in-mst.txt", "r", stdin);
+	freopen("Prim.txt", "r", stdin);
 	int houses, roads, u, v;
 	double w; 
 	cin >> houses >> roads;
@@ -47,8 +57,7 @@ int main() {
 		graph.addEdge(u, v, w);
 	}
 
-	graph.PrimMST();
-	graph.KruskalMST();
+	graph.Prim();
 
 	return 0;
 }
@@ -59,31 +68,21 @@ Graph::Graph(int vertices, int edges) {
 	adjacencyList.resize(vertices);
 }	
 
-void Graph::addEdge(int u, int v, double weight) {
-	Node node;
-	node.weight = weight;
-	node.vertex = v;
-	adjacencyList[u].push_back(node);
-	node.vertex = u;
-	adjacencyList[v].push_back(node);
-
-	Edge edge;
-	edge.source = u;
-	edge.destination = v;
-	edge.weight = weight;
-	Edges.push_back(edge);
+void Graph::addEdge(int u, int v, double w) {
+	adjacencyList[u].push_back(Node(v, w));
+	adjacencyList[v].push_back(Node(u, w));
+	
+	Edges.push_back(Edge(u, v, w));
 }
 
-void Graph::PrimMST() {
+void Graph::Prim() {
 	priority_queue<Node, vector<Node>, Comparator> pq;
 
     vector<double> edgeCost(vertices, INF); edgeCost[0] = 0.0;
 	vector<int>parents(vertices, -1);
 	vector<bool> inMST(vertices, false);
 	
-	Node node;
-	node.vertex = 0;
-	node.weight = 0.0;
+	Node node = Node(0, 0.0);
 	pq.push(node);
 
 	while (!pq.empty()) {
@@ -125,55 +124,4 @@ void Graph::PrimMST() {
 	printf("}\n"); 
 }
 
-int Parent(int vertex, vector<int>&parents)  {
-	if (vertex == parents[vertex]) {
-		return vertex;
-	}
-
-	return parents[vertex] = Parent(parents[vertex], parents);
-}
-
-void Union(int a, int b, vector<int>&parents, vector<int>&ranks) {
-	a = Parent(a, parents);
-	b = Parent(b, parents);
-
-	if (ranks[a] > ranks[b]) {
-		parents[a] = b;
-	} else if (ranks[a] < ranks[b]) {
-		parents[b] = a;
-	} else {
-		parents[a] = b;
-		ranks[b]++;
-	}
-}
-
-void Graph::KruskalMST() {
-	vector<int>parents(vertices), ranks(vertices, 0);
-	for (int i=0; i<vertices; i++) {
-		parents[i] = i;
-		ranks[i] = 0;
-	}
-	vector<Edge> result;
-	sort(Edges.begin(), Edges.end());
-
-	for (int i=0; i<edges; i++) { 
-		if (Parent(Edges[i].source, parents) != Parent(Edges[i].destination, parents)) {
-			result.push_back(Edges[i]);
-			Union(Edges[i].source, Edges[i].destination, parents, ranks);
-		}
-	}
-
-	// double cost = 0.0;
-	// for (int i=0; i<vertices-1; i++) {
-	// 	cost += result[i].weight;
-	// }
-	// printf("Cost of the minimum spanning tree : %0.3lf\n", cost);
-
-	printf("List of edges selected by Kruskal: {(%d, %d)", result[0].source, result[0].destination);
-
-	for (int i = 1; i<result.size(); i++) {
-		printf(", (%d, %d)", result[i].source, result[i].destination);
-    }
-	printf("}\n");	
-}
-
+//

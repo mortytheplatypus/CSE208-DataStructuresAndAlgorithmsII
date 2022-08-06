@@ -7,9 +7,9 @@ struct Node {
 	int vertex;
 	int weight;
 
-	Node(int v, int w) {
-		vertex = v;
-		weight = w;
+	Node(int vertex, int weight) {
+		this->vertex = vertex;
+		this->weight = weight;
 	}
 };
 
@@ -26,19 +26,21 @@ public:
 		adjacencyList.resize(vertices);
 	}
 
-	void addEdge(int u, int v, int w) {
-		adjacencyList[u].push_back(Node(v, w));
+	void addEdge(int source, int destination, int weight) {
+		adjacencyList[source].push_back(Node(destination, weight));
 	}
 
 	void Dijkstra(int, int);
 };
 
 int main() {
-	freopen("in-Dijkstra.txt", "r", stdin);
-	int vertices, edges, u, v, source, destination; 
-	int w;
+	freopen("Dijkstra.txt", "r", stdin);
+
+	int vertices, edges, u, v, w, source, destination; 
 	cin >> vertices >> edges;
+
 	Graph graph(vertices);
+
 	for (int i=0; i<edges; i++) {
 		cin >> u >> v >> w;
 		graph.addEdge(u, v, w);
@@ -46,9 +48,11 @@ int main() {
 
 	cin >> source >> destination;
 	graph.Dijkstra(source, destination);
+	
     return 0;
 }
 
+// Done
 void Graph::Dijkstra(int source, int destination) {
 	vector<int>costs(vertices, INF);
 	vector<bool>inShortestPath(vertices, false);
@@ -83,12 +87,12 @@ void Graph::Dijkstra(int source, int destination) {
 		}
 	}
 
-	cout << "Shortest path cost: " << costs[destination] << endl;
+	cout << "Shortest path cost: " << costs[destination] << "\n";
 
 	vector<int>shortestPath;
 	v = destination;
 
-	while (v!=source) {
+	while (v != source) {
 		shortestPath.push_back(v);
 		v = parents[v];
 	}
@@ -97,5 +101,7 @@ void Graph::Dijkstra(int source, int destination) {
 	for (int i=shortestPath.size()-1; i>0; i--) {
 		cout << shortestPath[i] << " -> ";
 	}
-	cout << destination << endl;
+	cout << destination << "\n";
 }
+
+//
